@@ -70,7 +70,7 @@ class MessageVerification(object):
             self.logger.info('Connected To %s.', server_address)
         except socket.error:
             logging.exception("Error in MessageVerification")
-            print 'Connection failed. Check server.'
+            print('Connection failed. Check server.')
             raise
 
     def connectToClient(self, ip_address):
@@ -84,7 +84,7 @@ class MessageVerification(object):
             self.logger.info("Connection accepted from %s", address)
         except:
             logging.exception("Error in MessageVerification")
-            print 'Connection failed. Check server.'
+            print('Connection failed. Check server.')
             raise
 
     def sendMessage(self, text):
@@ -117,7 +117,7 @@ class NaslabNetwork(object):
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.settimeout(1)
         server_address = (ip_address, 1895)
-        print >>sys.stderr, 'Connecting To %s Port %s' % server_address
+        print(>>sys.stderr, 'Connecting To %s Port %s' % server_address)
         self.sock.connect(server_address)
         self.degree_to_rad = np.pi / 180
 
@@ -125,11 +125,11 @@ class NaslabNetwork(object):
         # get position
         check = struct.unpack('<B', self.sock.recv(1))[0]
         if check is not 2:
-            print 'Warning: Bad Qualisys Packet'
+            print('Warning: Bad Qualisys Packet')
             pose_msg_x = float('nan')
         recieved_data = self.sock.recv(4096)
         if len(recieved_data) < 12:
-            print 'bad 2'
+            print('bad 2')
             pose_msg_x = float('nan')
         num_byte = num * 24
         pose_msg_x = struct.unpack('<f', recieved_data[num_byte:num_byte + 4])[0]
@@ -149,11 +149,11 @@ class LabNavigation(object):
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.settimeout(10)
         server_address = (ip_address, 1895)
-        print >>sys.stderr, 'Connecting To %s Port %s' % server_address
+        print(>>sys.stderr, 'Connecting To %s Port %s' % server_address)
         try:
             self.sock.connect(server_address)
         except socket.error:
-            print 'Connection failed. Check server.'
+            print('Connection failed. Check server.')
             raise
 
     def getStates(self, num):
@@ -163,7 +163,7 @@ class LabNavigation(object):
         try:
             agent_id = struct.unpack('<B', packed_buffer[:1])[0]
         except struct.error:
-            print 'Connection terminated by server.'
+            print('Connection terminated by server.')
             raise
         x = struct.unpack('<f', packed_buffer[1:5])[0]
         y = struct.unpack('<f', packed_buffer[5:9])[0]
