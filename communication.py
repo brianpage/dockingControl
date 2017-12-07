@@ -88,9 +88,8 @@ class MessageVerification(object):
             raise
 
     def sendMessage(self, text):
-        text=text.encode()
         self.logger.debug("Sending: %s", text)
-        self.sock.sendall(text)
+        self.sock.sendall(text.encode())
         # sleep(1)
         self.logger.info("Sent: %s", text)
 
