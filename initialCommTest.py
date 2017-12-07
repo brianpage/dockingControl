@@ -1,7 +1,7 @@
 import socket
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 TCP_IP = '192.168.1.26'
 TCP_PORT = 29500
