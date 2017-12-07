@@ -6,26 +6,16 @@ import matplotlib.pyplot as plt
 TCP_IP = '192.168.1.26'
 TCP_PORT = 29500
 BUFFER_SIZE = 1024
-msg = "$BPLOG,ALL,ON".encode()
+MESSAGE = "$BPLOG,ALL,ON"
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
 
 data = s.recv(BUFFER_SIZE)
 print("startup",data.decode())
-# s.send(MESSAGE.encode())
-# s.shutdown(socket.SHUT_WR)
+s.send(MESSAGE.encode())
+s.shutdown(socket.SHUT_WR)
 
-totalsent = 0
-MSGLEN=len(msg)
-while totalsent < MSGLEN:
-    sent = s.send(msg[totalsent:])
-    print("sending")
-    if sent == 0:
-        raise RuntimeError("socket connection broken")
-    totalsent = totalsent + sent
-
-print("Entering loop")
 count=0
 while count < 5:
         data = s.recv(BUFFER_SIZE)
