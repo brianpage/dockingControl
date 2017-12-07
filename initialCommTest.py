@@ -12,9 +12,9 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
 
 data = s.recv(BUFFER_SIZE)
-print("OPJASF",data.decode())
-s.sendall(MESSAGE.encode())
-s.shutdown(socket.SHUT_WR)
+print("startup",data.decode())
+s.send(MESSAGE.encode())
+# s.shutdown(socket.SHUT_WR)
 
 count=0
 while count < 5:
