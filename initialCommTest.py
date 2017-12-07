@@ -15,9 +15,12 @@ data = s.recv(BUFFER_SIZE)
 print("OPJASF",data.decode())
 s.sendall(MESSAGE.encode())
 s.shutdown(socket.SHUT_WR)
-while True:
+
+count=0
+while count < 5:
         data = s.recv(BUFFER_SIZE)
         print("loop",data.decode())
+        count=count+1
 
 s.close()
 
