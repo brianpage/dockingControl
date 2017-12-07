@@ -2,6 +2,7 @@ import socket
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 
 #test
 
@@ -12,8 +13,11 @@ MESSAGE = "$BPLOG,ALL,ON"
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
+time.sleep(0.5)
 data = s.recv(BUFFER_SIZE)
+
 print("received data:", data.decode())
+time.sleep(0.5)
 s.sendall(MESSAGE.encode())
 
 while True:
