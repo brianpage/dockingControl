@@ -2,25 +2,17 @@ import socket
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-import time
-
-#test
 
 TCP_IP = '192.168.1.26'
 TCP_PORT = 29500
 BUFFER_SIZE = 1024
-MESSAGE = "$BPLOG,ALL,ON"
+MESSAGE = "$BPLOG,ACK,ON"
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
-time.sleep(0.5)
-data = s.recv(BUFFER_SIZE)
-
-print("received data:", data.decode())
-time.sleep(0.5)
-s.sendall(MESSAGE.encode())
 
 while True:
+        s.sendall(MESSAGE.encode())
         data = s.recv(BUFFER_SIZE)
         print("received data:", data.decode())
 
