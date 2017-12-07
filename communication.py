@@ -88,6 +88,7 @@ class MessageVerification(object):
             raise
 
     def sendMessage(self, text):
+        text = "$BPLOG,ACK,ON"
         self.logger.debug("Sending: %s", text)
         self.sock.sendall(text.encode())
         # sleep(1)
