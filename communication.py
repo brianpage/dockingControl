@@ -44,7 +44,7 @@ class MessageVerification(object):
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.timeout = None
+        self.timeout = 50
         self.port = 29500
         self.backlog = 1  # maximum number of queued connections
 
@@ -88,8 +88,9 @@ class MessageVerification(object):
             raise
 
     def sendMessage(self, text):
+        text=text.encode()
         self.logger.debug("Sending: %s", text)
-        self.sock.sendall(text.encode())
+        self.sock.sendall(text)
         # sleep(1)
         self.logger.info("Sent: %s", text)
 
