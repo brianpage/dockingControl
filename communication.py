@@ -44,7 +44,7 @@ class MessageVerification(object):
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.timeout = 50
+        self.timeout = 5
         self.port = 29500
         self.backlog = 1  # maximum number of queued connections
 
@@ -96,7 +96,8 @@ class MessageVerification(object):
 
     def verifyMessage(self, text):
         self.logger.info("Waiting for message.")
-        received_text = self.sock.recv(4096).decode()
+        received_text = self.sock.recv(4096)
+        received_text=received_text.decode()
         self.logger.debug("Received: %s", received_text)
         if received_text == text:
             self.logger.info("Successful message verification: %s", text)
