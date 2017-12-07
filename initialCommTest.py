@@ -12,7 +12,10 @@ MESSAGE = "$BPLOG,ALL,ON"
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
+data = s.recv(BUFFER_SIZE)
+print("received data:", data.decode())
 s.sendall(MESSAGE.encode())
+
 while True:
         data = s.recv(BUFFER_SIZE)
         print("received data:", data.decode())
