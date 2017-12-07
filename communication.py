@@ -117,7 +117,7 @@ class NaslabNetwork(object):
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.settimeout(1)
         server_address = (ip_address, 1895)
-        print(>>sys.stderr, 'Connecting To %s Port %s' % server_address)
+        print('Connecting To %s Port %s' % server_address)
         self.sock.connect(server_address)
         self.degree_to_rad = np.pi / 180
 
@@ -149,7 +149,7 @@ class LabNavigation(object):
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.settimeout(10)
         server_address = (ip_address, 1895)
-        print(>>sys.stderr, 'Connecting To %s Port %s' % server_address)
+        print('Connecting To %s Port %s' % server_address)
         try:
             self.sock.connect(server_address)
         except socket.error:
