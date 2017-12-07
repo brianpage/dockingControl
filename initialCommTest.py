@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 TCP_IP = '192.168.1.26'
 TCP_PORT = 29500
 BUFFER_SIZE = 1024
-msg = "$BPLOG,ALL,ON"
+msg = "$BPLOG,ALL,ON".encode()
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
