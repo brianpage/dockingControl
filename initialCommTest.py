@@ -13,11 +13,9 @@ s.connect((TCP_IP, TCP_PORT))
 
 data = s.recv(BUFFER_SIZE)
 print("startup",data.decode())
-s.sendall(MESSAGE.encode('ascii'))
-s.shutdown(socket.SHUT_WR)
-s.close()
+s.sendall(MESSAGE.encode('undefined'))
+# s.shutdown(socket.SHUT_WR)
 
-s.connect((TCP_IP, TCP_PORT))
 count=0
 while count < 5:
         data = s.recv(BUFFER_SIZE)
