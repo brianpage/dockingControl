@@ -19,7 +19,7 @@ print("startup",data.decode())
 totalsent = 0
 MSGLEN=len(msg)
 while totalsent < MSGLEN:
-    sent = self.sock.send(msg[totalsent:])
+    sent = s.send(msg[totalsent:])
     if sent == 0:
         raise RuntimeError("socket connection broken")
     totalsent = totalsent + sent
