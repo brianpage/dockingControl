@@ -45,7 +45,7 @@ class MessageVerification(object):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.timeout = None
-        self.port = 65400
+        self.port = 29500
         self.backlog = 1  # maximum number of queued connections
 
     def setTimeout(self, seconds):
@@ -112,11 +112,11 @@ class MessageVerification(object):
 
 class NaslabNetwork(object):
 
-    def __init__(self, ip_address='192.168.0.25'):
+    def __init__(self, ip_address='192.168.1.26'):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.settimeout(1)
-        server_address = (ip_address, 1895)
+        server_address = (ip_address, 29500)
         print('Connecting To %s Port %s' % server_address)
         self.sock.connect(server_address)
         self.degree_to_rad = np.pi / 180
@@ -144,11 +144,11 @@ class NaslabNetwork(object):
 
 class LabNavigation(object):
 
-    def __init__(self, ip_address='192.168.0.25'):
+    def __init__(self, ip_address='192.168.1.26'):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.settimeout(10)
-        server_address = (ip_address, 1895)
+        server_address = (ip_address, 29500)
         print('Connecting To %s Port %s' % server_address)
         try:
             self.sock.connect(server_address)
