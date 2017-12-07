@@ -13,7 +13,7 @@ s.connect((TCP_IP, TCP_PORT))
 
 data = s.recv(BUFFER_SIZE)
 print("startup",data.decode())
-s.sendall(MESSAGE)#.encode())
+s.sendall(MESSAGE).encode('ascii')
 # s.shutdown(socket.SHUT_WR)
 
 count=0
