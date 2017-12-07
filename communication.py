@@ -89,13 +89,13 @@ class MessageVerification(object):
 
     def sendMessage(self, text):
         self.logger.debug("Sending: %s", text)
-        self.sock.sendall(text)
+        self.sock.sendall(text.encode())
         # sleep(1)
         self.logger.info("Sent: %s", text)
 
     def verifyMessage(self, text):
         self.logger.info("Waiting for message.")
-        received_text = self.sock.recv(4096)
+        received_text = self.sock.recv(4096).decode()
         self.logger.debug("Received: %s", received_text)
         if received_text == text:
             self.logger.info("Successful message verification: %s", text)
