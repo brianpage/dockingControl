@@ -6,20 +6,20 @@ import numpy as np
 TCP_IP = '192.168.1.26'
 TCP_PORT = 29500
 BUFFER_SIZE = 1024
-MESSAGE = "$BPLOG,ALL,ON"
+MESSAGE = "$BPLOG,ALL,ON\r\n"
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
 
 data = s.recv(BUFFER_SIZE)
 print("startup",data.decode())
-s.sendall(MESSAGE.encode('undefined'))
+s.sendall(MESSAGE.encode('ascii'))
 # s.shutdown(socket.SHUT_WR)
 
 count=0
 while count < 5:
         data = s.recv(BUFFER_SIZE)
-        print("loop",data.decode())
+        print("loop",data.decode('ascii'))
         count=count+1
 
 s.close()
