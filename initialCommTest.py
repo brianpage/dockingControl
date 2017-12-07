@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 TCP_IP = '192.168.1.26'
 TCP_PORT = 29500
-BUFFER_SIZE = 1024
+BUFFER_SIZE = 1
 MESSAGE = "$BPLOG,ALL,ON"
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -16,7 +16,7 @@ print("OPJASF",data.decode())
 s.sendall(MESSAGE.encode())
 while True:
         data = s.recv(BUFFER_SIZE)
-        print(data.decode())
+        print("loop",data.decode())
 
 s.close()
 
