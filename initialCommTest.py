@@ -20,11 +20,12 @@ totalsent = 0
 MSGLEN=len(msg)
 while totalsent < MSGLEN:
     sent = s.send(msg[totalsent:])
+    print("sending")
     if sent == 0:
         raise RuntimeError("socket connection broken")
     totalsent = totalsent + sent
 
-
+print("Entering loop")
 count=0
 while count < 5:
         data = s.recv(BUFFER_SIZE)
