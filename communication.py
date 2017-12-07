@@ -96,7 +96,7 @@ class MessageVerification(object):
 
     def verifyMessage(self, text):
         self.logger.info("Waiting for message.")
-        received_text = self.sock.recv(4096)
+        received_text = self.sock.recv(1024)
         received_text=received_text.decode()
         self.logger.debug("Received: %s", received_text)
         if received_text == text:
