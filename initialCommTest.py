@@ -27,8 +27,9 @@ while count < 5:
         print(data)
         parsed=parser.parse(data)
         print(parsed.message)
-
-        s.sendall(parser.updateNav(parsed.timestamp,10,10,3,1000,0,1))
+        MESSAGE=parser.updateNav(parsed.timestamp,10,10,3,1000,0,1)
+        print(MESSAGE)
+        s.sendall(MESSAGE)
 
 
         # print("loop",data.decode('ascii'))
