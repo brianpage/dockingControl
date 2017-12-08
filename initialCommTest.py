@@ -1,6 +1,7 @@
 import socket
 import cv2
 import numpy as np
+import NMEA
 # import matplotlib.pyplot as plt
 
 TCP_IP = '192.168.1.26'
@@ -10,18 +11,26 @@ MESSAGE = "$BPLOG,ALL,ON\r\n"
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
+parser=NMEA()
 
 data = s.recv(BUFFER_SIZE)
-print("startup",data.decode())
+data=data.decode()
+
+# print("startup",data.decode())
 s.sendall(MESSAGE.encode('ascii'))
 # s.shutdown(socket.SHUT_WR)
 
 count=0
 while count < 5:
         data = s.recv(BUFFER_SIZE)
-        print("loop",data.decode('ascii'))
-        count=count+1
+        data=data.decode()
+        print(data)
+        print(parser.parse(data))
 
+
+        # print("loop",data.decode('ascii'))
+        count=count+1
+        print(count)
 s.close()
 
 
