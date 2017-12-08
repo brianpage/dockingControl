@@ -60,5 +60,5 @@ class NMEAparse(object):
 
 
 	def updateNav(self,timestamp,heading,depth,depthMode,thrust,speedMode,horizontalMode):
-		return '$BPRMB,'+str(timestamp)+','+str(heading)+','+str(depth)+','+str(depthMode)+','+str(thrust)+','+str(speedMode)+','+str(horizontalMode)+'\r\n'.encode(ascii)
+		return '$BPRMB,'+str(timestamp)+','+str(heading)+','+str(depth)+','+str(depthMode)+','+str(thrust)+','+str(speedMode)+','+str(horizontalMode)+'\r\n'.encode('ascii')
 
