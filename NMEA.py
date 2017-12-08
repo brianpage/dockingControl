@@ -24,7 +24,7 @@ class NMEAparse(object):
 	def parse(self,sentence):
 		sentence = sentence.split('*')[0]
 		brokenSentence=sentence.split(',')
-		print(brokenSentence)
+		# print(brokenSentence)
 		messageType=brokenSentence[0]
 		self.timestamp=brokenSentence[1]
 		if(messageType=='$BFACK'):
