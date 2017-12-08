@@ -26,7 +26,7 @@ while count < 5:
         data=data.decode()
         print(data)
         parsed=parser.parse(data)
-        print(parsed.messageType)
+        print(parsed.message)
 
 
         # print("loop",data.decode('ascii'))
