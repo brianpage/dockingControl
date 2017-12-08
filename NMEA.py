@@ -26,7 +26,7 @@ class NMEAparse(object):
 		brokenSentence=sentence.split(',')
 		# print(brokenSentence)
 		messageType=brokenSentence[0]
-		self.timestamp=brokenSentence[1]
+		self.timestamp=float(brokenSentence[1])
 		if(messageType=='$BFACK'):
 			self.message='ACK'
 
