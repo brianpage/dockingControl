@@ -29,7 +29,7 @@ class NMEAparse(object):
 			self.message='ACK'
 
 
-		else if(messageType=='$BFNVG'):
+		elif(messageType=='$BFNVG'):
 			self.message='NVG'
 			self.latitude=float(brokenSentence[2])
 			self.hemisphereNS=brokenSentence[3]
@@ -42,7 +42,7 @@ class NMEAparse(object):
 			self.roll=float(brokenSentence[10])
 			self.pitch=float(brokenSentence[11])
 
-		else if(messageType=='$BFNVR'):
+		elif(messageType=='$BFNVR'):
 			self.messageType='NVR'
 			self.eastRate=float(brokenSentence[2])
 			self.northRate=float(brokenSentence[3])
