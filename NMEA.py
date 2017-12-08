@@ -53,8 +53,12 @@ class NMEAparse(object):
 			self.rollRate=float(brokenSentence[6])
 			self.yawRate=float(brokenSentence[7])
 
+		else:
+			print("Message type undefined")
+
 		return self
 
 
-
+	def updateNav(self,timestamp,heading,depth,depthMode,thrust,speedMode,horizontalMode):
+		return '$BPRMB,'+str(timestamp)+','+str(heading)+','+str(depth)+','+str(depthMode)+','+str(thrust)+','+str(speedMode)+','+str(horizontalMode)
 
