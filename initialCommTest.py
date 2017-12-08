@@ -1,7 +1,7 @@
 import socket
 import cv2
 import numpy as np
-import NMEA
+from NMEA import NMEAparse
 # import matplotlib.pyplot as plt
 
 TCP_IP = '192.168.1.26'
