@@ -45,7 +45,7 @@ class NMEAparse(object):
 			self.pitch=float(brokenSentence[11])
 
 		elif(messageType=='$BFNVR'):
-			self.messageType='NVR'
+			self.message='NVR'
 			self.eastRate=float(brokenSentence[2])
 			self.northRate=float(brokenSentence[3])
 			self.downRate=float(brokenSentence[4])
