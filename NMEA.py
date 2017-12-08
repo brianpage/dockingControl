@@ -53,6 +53,8 @@ class NMEAparse(object):
 			self.rollRate=float(brokenSentence[6])
 			self.yawRate=float(brokenSentence[7])
 
+		return self
+
 
 
 
