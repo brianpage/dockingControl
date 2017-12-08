@@ -11,7 +11,7 @@ MESSAGE = "$BPLOG,ALL,ON\r\n"
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
-parser=NMEA()
+parser=NMEAparse()
 
 data = s.recv(BUFFER_SIZE)
 data=data.decode()
