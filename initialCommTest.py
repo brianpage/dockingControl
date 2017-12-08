@@ -25,7 +25,8 @@ while count < 5:
         data = s.recv(BUFFER_SIZE)
         data=data.decode()
         print(data)
-        print(parser.parse(data))
+        parsed=parser.parse(data)
+        print(parsed.timestamp)
 
 
         # print("loop",data.decode('ascii'))
