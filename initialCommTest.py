@@ -7,7 +7,7 @@ from NMEA import NMEAparse
 TCP_IP = '192.168.1.26'
 TCP_PORT = 29500
 BUFFER_SIZE = 1024
-MESSAGE = "$BPLOG,ALL,ON\r\n"
+MESSAGE = "$BPLOG,ACK,ON\r\n"
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
