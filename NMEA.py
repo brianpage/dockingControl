@@ -22,6 +22,7 @@ class NMEAparse(object):
 
 
 	def parse(self,sentence):
+		stenence = sentence.split('*', 1)[0]
 		brokenSentence=sentence.split(',')
 		messageType=brokenSentence[0]
 		self.timestamp=brokenSentence[1]
