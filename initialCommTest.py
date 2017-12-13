@@ -21,15 +21,63 @@ data=data.decode()
 s.sendall(MESSAGE.encode('ascii'))
 # s.shutdown(socket.SHUT_WR)
 
+cap=cv2.VideoCapture(0)
+
+#fourcc=cv2.VideoWriter_fourcc(*'XVID')
+#out=cv2.VideoWriter('output.avi',fourcc,20.0,(640,480))
+
+params=cv2.SimpleBlobDetector_Params()
+params.minThreshold=200
+params.maxThreshold=255
+
+params.filterByColor=True
+params.blobColor=255
+
+params.filterByArea=True
+params.minArea=100
+
+params.filterByCircularity=True
+params.minCircularity=0.7
+
+params.filterByConvexity=False
+params.minConvexity=0.8
+
+params.filterByInertia=False
+params.minInertiaRatio=0.8
+detector=cv2.SimpleBlobDetector_create(params)
+
+
 count=0
 while count < 500:
+        _, frame=cap.read()
+        gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+        #hsv=cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
+        #retval,threshold=cv2.threshold(gray,235,255,cv2.THRESH_BINARY)
+        #threshold=cv2.bilateralFilter(threshold,15,75,75)
+        #threshold=cv2.medianBlur(threshold,3)
+        #gauss=cv2.adaptiveThreshold(gray,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,115,1)
+        #retval,otsu=cv2.threshold(gray,125,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+        keypoints=detector.detect(gray)
+        if keypoints!=[]:
+                for keypoint in keypoints:
+                        x=keypoint.pt[0]
+                        y=keypoint.pt[1]
+                        size=keypoint.size
+        else:
+                x=-1
+                size=-1
+                y=-1
+        # print(x,y,size)
+
+
         data = s.recv(BUFFER_SIZE)
         data=data.decode()
         print(data)
         parsed=parser.parse(data)
         print(parsed.message)
-        heading=10*np.sin(count/10)
-        MESSAGE=parser.updateNav(parsed.timestamp,heading,heading,3,0,0,1)
+        rudder=((x/1920)+.5)*10
+        elevator=((y/1080)+.5)*10
+        MESSAGE=parser.updateNav(parsed.timestamp,rudder,elevator,3,0,0,1)
         print(MESSAGE)
         s.sendall(MESSAGE)
 
@@ -47,49 +95,4 @@ s.close()
 # #cv2.waitKey(0)
 # #cv2.destroyAllWindows()
 
-# cap=cv2.VideoCapture(0)
-
-# #fourcc=cv2.VideoWriter_fourcc(*'XVID')
-# #out=cv2.VideoWriter('output.avi',fourcc,20.0,(640,480))
-
-# params=cv2.SimpleBlobDetector_Params()
-# params.minThreshold=200
-# params.maxThreshold=255
-
-# params.filterByColor=True
-# params.blobColor=255
-
-# params.filterByArea=True
-# params.minArea=100
-
-# params.filterByCircularity=True
-# params.minCircularity=0.7
-
-# params.filterByConvexity=False
-# params.minConvexity=0.8
-
-# params.filterByInertia=False
-# params.minInertiaRatio=0.8
-# detector=cv2.SimpleBlobDetector_create(params)
-
-# while True:
-#         _, frame=cap.read()
-#         gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
-#         #hsv=cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
-#         #retval,threshold=cv2.threshold(gray,235,255,cv2.THRESH_BINARY)
-#         #threshold=cv2.bilateralFilter(threshold,15,75,75)
-#         #threshold=cv2.medianBlur(threshold,3)
-#         #gauss=cv2.adaptiveThreshold(gray,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,115,1)
-#         #retval,otsu=cv2.threshold(gray,125,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-#         keypoints=detector.detect(gray)
-#         if keypoints!=[]:
-#                 for keypoint in keypoints:
-#                         x=keypoint.pt[0]
-#                         y=keypoint.pt[1]
-#                         size=keypoint.size
-#         else:
-#                 x=-1
-#                 size=-1
-#                 y=-1
-#         print(x,y,size)
 
