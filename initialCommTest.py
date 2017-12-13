@@ -49,6 +49,8 @@ detector=cv2.SimpleBlobDetector_create(params)
 
 
 count=0
+rudder=0
+elevator=0
 while count < 500:
         _, frame=cap.read()
         gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
