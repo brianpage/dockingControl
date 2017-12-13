@@ -10,15 +10,16 @@ TCP_PORT = 29500
 BUFFER_SIZE = 1024
 MESSAGE = "$BPLOG,ACK,ON\r\n"
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((TCP_IP, TCP_PORT))
-parser=NMEAparse()
+# s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# s.connect((TCP_IP, TCP_PORT))
+# parser=NMEAparse()
 
-data = s.recv(BUFFER_SIZE)
-data=data.decode()
+# data = s.recv(BUFFER_SIZE)
+# data=data.decode()
 
-# print("startup",data.decode())
-s.sendall(MESSAGE.encode('ascii'))
+# # print("startup",data.decode())
+# s.sendall(MESSAGE.encode('ascii'))
+
 # s.shutdown(socket.SHUT_WR)
 
 cap=cv2.VideoCapture(0)
@@ -70,16 +71,16 @@ while count < 500:
         # print(x,y,size)
 
 
-        data = s.recv(BUFFER_SIZE)
-        data=data.decode()
-        print(data)
-        parsed=parser.parse(data)
-        print(parsed.message)
+        # data = s.recv(BUFFER_SIZE)
+        # data=data.decode()
+        # print(data)
+        # parsed=parser.parse(data)
+        # print(parsed.message)
         rudder=((x/1920)+.5)*10
         elevator=((y/1080)+.5)*10
-        MESSAGE=parser.updateNav(parsed.timestamp,rudder,elevator,3,0,0,1)
-        print(MESSAGE)
-        s.sendall(MESSAGE)
+        # MESSAGE=parser.updateNav(parsed.timestamp,rudder,elevator,3,0,0,1)
+        # print(MESSAGE)
+        # s.sendall(MESSAGE)
 
 
         # print("loop",data.decode('ascii'))
