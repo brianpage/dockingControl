@@ -2,7 +2,7 @@ import socket
 import cv2
 import numpy as np
 from NMEA import NMEAparse
-import timer
+import time
 # import matplotlib.pyplot as plt
 
 TCP_IP = '192.168.1.26'
