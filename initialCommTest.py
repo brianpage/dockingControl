@@ -85,7 +85,7 @@ while count < 500:
 
         # print("loop",data.decode('ascii'))
         count=count+1
-        print(count,rudder,elevator)
+        print(count,rudder,elevator,x,y)
         time.sleep(0.1)
 s.close()
 
