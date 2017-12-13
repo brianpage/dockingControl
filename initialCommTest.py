@@ -78,9 +78,9 @@ while count < 500:
         # print(data)
         # parsed=parser.parse(data)
         # print(parsed.message)
-        if x!=0:
+        if x!=-1:
                 rudder=((x/1920)+.5)*10
-        if y!=0:
+        if y!=-1:
                 elevator=((y/1080)+.5)*10
         # MESSAGE=parser.updateNav(parsed.timestamp,rudder,elevator,3,0,0,1)
         # print(MESSAGE)
