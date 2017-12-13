@@ -2,6 +2,7 @@ import socket
 import cv2
 import numpy as np
 from NMEA import NMEAparse
+import timer
 # import matplotlib.pyplot as plt
 
 TCP_IP = '192.168.1.26'
@@ -21,13 +22,14 @@ s.sendall(MESSAGE.encode('ascii'))
 # s.shutdown(socket.SHUT_WR)
 
 count=0
-while count < 5:
+while count < 500:
         data = s.recv(BUFFER_SIZE)
         data=data.decode()
         print(data)
         parsed=parser.parse(data)
         print(parsed.message)
-        MESSAGE=parser.updateNav(parsed.timestamp,10,10,3,1000,0,1)
+        heading=10*np.sin(count/10)
+        MESSAGE=parser.updateNav(parsed.timestamp,heading,heading,3,0,0,1)
         print(MESSAGE)
         s.sendall(MESSAGE)
 
@@ -35,6 +37,7 @@ while count < 5:
         # print("loop",data.decode('ascii'))
         count=count+1
         print(count)
+        time.sleep(0.1)
 s.close()
 
 
