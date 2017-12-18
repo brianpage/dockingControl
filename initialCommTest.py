@@ -3,25 +3,29 @@ import cv2
 import numpy as np
 from NMEA import NMEAparse
 import time
+from datetime import datetime
+import os
 # import matplotlib.pyplot as plt
 
+##comm setup
 TCP_IP = '192.168.1.26'
 TCP_PORT = 29500
 BUFFER_SIZE = 1024
 MESSAGE = "$BPLOG,ACK,ON\r\n"
 
-# s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# s.connect((TCP_IP, TCP_PORT))
-# parser=NMEAparse()
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((TCP_IP, TCP_PORT))
+parser=NMEAparse()
 
-# data = s.recv(BUFFER_SIZE)
-# data=data.decode()
+data = s.recv(BUFFER_SIZE)
+data=data.decode()
 
-# # print("startup",data.decode())
-# s.sendall(MESSAGE.encode('ascii'))
-
+# print("startup",data.decode())
+s.sendall(MESSAGE.encode('ascii'))
 # s.shutdown(socket.SHUT_WR)
 
+
+##Vision setup
 cap=cv2.VideoCapture(0)
 
 #fourcc=cv2.VideoWriter_fourcc(*'XVID')
@@ -51,6 +55,13 @@ detector=cv2.SimpleBlobDetector_create(params)
 count=0
 rudder=0
 elevator=0
+thrust=0
+
+##datalogging setup
+moment=time.strftime("%Y-%b-%d__%H_%M",time.localtime())
+f=open(moment+'.csv','w')
+f.write("time,latitude,longitude,altitude,depth,heading,pitch,roll,northRate,eastRate,downRate,yawRate,pitchRate,rollRate")
+
 while count < 500:
         _, frame=cap.read()
         gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
@@ -73,25 +84,28 @@ while count < 500:
         # print(x,y,size)
 
 
-        # data = s.recv(BUFFER_SIZE)
-        # data=data.decode()
-        # print(data)
-        # parsed=parser.parse(data)
-        # print(parsed.message)
+        data = s.recv(BUFFER_SIZE)
+        data=data.decode()
+        print(data)
+        parsed=parser.parse(data)
+        print(parsed.message)
         if x!=-1:
                 rudder=((x/640)-.5)*10
         if y!=-1:
                 elevator=((y/480)-.5)*10
-        # MESSAGE=parser.updateNav(parsed.timestamp,rudder,elevator,3,0,0,1)
-        # print(MESSAGE)
-        # s.sendall(MESSAGE)
+        MESSAGE=parser.updateNav(parsed.timestamp,rudder,elevator,thrust)
+        print(MESSAGE)
+        s.sendall(MESSAGE)
 
 
-        # print("loop",data.decode('ascii'))
+        print("loop",data.decode('ascii'))
         count=count+1
         print(count,rudder,elevator,x,y)
+        now=datetime.now()
+        file.write(str(now)+','+str(parsed.latitude)+','+str(parsed.longitude)+','+str(parsed.altitude)+','+str(parsed.depth)+','+str(parsed.heading)+','+str(parsed.roll)+','+str(parsed.pitch)+','+str(parsed.northRate)+','+str(parsed.eastRate)+','+str(parsed.downRate)+','+str(parsed.yawRate)+','+str(parsed.pitchRate)+','+str(parsed.rollRate))
         time.sleep(0.1)
 s.close()
+file.close()
 
 
 # #img=cv2.imread('image.jpg',cv2.IMREAD_GRAYSCALE)
