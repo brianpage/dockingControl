@@ -13,17 +13,20 @@ TCP_PORT = 29500
 BUFFER_SIZE = 1024
 MESSAGE = "$BPLOG,ACK,ON\r\n"
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((TCP_IP, TCP_PORT))
+networked=0
+
+if networked:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((TCP_IP, TCP_PORT))
+
+
+        data = s.recv(BUFFER_SIZE)
+        data=data.decode()
+
+        # print("startup",data.decode())
+        s.sendall(MESSAGE.encode('ascii'))
+        # s.shutdown(socket.SHUT_WR)
 parser=NMEAparse()
-
-data = s.recv(BUFFER_SIZE)
-data=data.decode()
-
-# print("startup",data.decode())
-s.sendall(MESSAGE.encode('ascii'))
-# s.shutdown(socket.SHUT_WR)
-
 
 ##Vision setup
 cap=cv2.VideoCapture(0)
@@ -83,26 +86,28 @@ while count < 500:
                 y=-1
         # print(x,y,size)
 
-
-        data = s.recv(BUFFER_SIZE)
-        data=data.decode()
-        print(data)
-        parsed=parser.parse(data)
-        print(parsed.message)
+        if networked:
+                data = s.recv(BUFFER_SIZE)
+                data=data.decode()
+                print(data)
+                parsed=parser.parse(data)
+                print(parsed.message)
         if x!=-1:
                 rudder=((x/640)-.5)*10
         if y!=-1:
                 elevator=((y/480)-.5)*10
-        MESSAGE=parser.updateNav(parsed.timestamp,rudder,elevator,thrust)
-        print(MESSAGE)
-        s.sendall(MESSAGE)
+        if networked:
+                MESSAGE=parser.updateNav(parsed.timestamp,rudder,elevator,thrust)
+                print(MESSAGE)
+                s.sendall(MESSAGE)
 
 
-        print("loop",data.decode('ascii'))
+                print("loop",data.decode('ascii'))
         count=count+1
         print(count,rudder,elevator,x,y)
         now=datetime.now()
-        file.write(str(now)+','+str(parsed.latitude)+','+str(parsed.longitude)+','+str(parsed.altitude)+','+str(parsed.depth)+','+str(parsed.heading)+','+str(parsed.roll)+','+str(parsed.pitch)+','+str(parsed.northRate)+','+str(parsed.eastRate)+','+str(parsed.downRate)+','+str(parsed.yawRate)+','+str(parsed.pitchRate)+','+str(parsed.rollRate))
+        if networked:
+                file.write(str(now)+','+str(parsed.latitude)+','+str(parsed.longitude)+','+str(parsed.altitude)+','+str(parsed.depth)+','+str(parsed.heading)+','+str(parsed.roll)+','+str(parsed.pitch)+','+str(parsed.northRate)+','+str(parsed.eastRate)+','+str(parsed.downRate)+','+str(parsed.yawRate)+','+str(parsed.pitchRate)+','+str(parsed.rollRate))
         time.sleep(0.1)
 s.close()
 file.close()
